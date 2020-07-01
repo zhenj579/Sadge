@@ -63,7 +63,7 @@ public class Commands {
     }
 
     //!tim
-    public void mentionTim(TextChannel channel)
+    public void mentionTimZhen(TextChannel channel)
     {
         channel.createMessage("<@149606618978451456> is very handsome").block();
     }
