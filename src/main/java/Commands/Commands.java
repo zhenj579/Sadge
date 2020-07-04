@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Commands {
-    String[] timCommandList = new String[]{
+    static String[] timCommandList = new String[]{
             "!roll",
             "!coinflip",
             "!compliment",
@@ -17,7 +17,7 @@ public class Commands {
             "!help"};
 
     //!roll out of 100
-    public void roll(TextChannel channel)
+    public static void roll(TextChannel channel)
     {
         Random randomRoll = new Random();
         int roll = randomRoll.nextInt(99) + 1;
@@ -25,7 +25,7 @@ public class Commands {
     }
 
     //!coinflip
-    public void coinFlip(TextChannel channel)
+    public static void coinFlip(TextChannel channel)
     {
         String result;
         Random r = new Random();
@@ -39,7 +39,7 @@ public class Commands {
         channel.createMessage("The result of the coinflip is " + result).block();
     }
 
-    private String complimentRandomizer() {
+    private static String complimentRandomizer() {
         String[] choice = new String[]{
                 "You're even better than a unicorn, because you're real.",
                 "You’re more helpful than you realize.",
@@ -55,7 +55,7 @@ public class Commands {
     }
 
     //!compliment
-    public void printCompliment(TextChannel channel)
+    public static void printCompliment(TextChannel channel)
     {
         channel.createEmbed(embed ->{
             embed.setDescription(complimentRandomizer());
@@ -63,25 +63,25 @@ public class Commands {
     }
 
     //!tim
-    public void mentionTim(TextChannel channel)
+    public static void mentionTim(TextChannel channel)
     {
         channel.createMessage("<@149606618978451456> is very handsome").block();
     }
 
     //!welcome
-    public void welcome(TextChannel channel, Message author)
+    public static void welcome(TextChannel channel, Message author)
     {
         channel.createMessage("Welcome <@" + author.getUserData().id() + ">").block();
     }
 
     //!help
-    public void help(TextChannel channel)
+    public static void help(TextChannel channel)
     {
         String listOfCommands = "";
         for (String i : timCommandList)
         {
-            listOfCommands += i;
-            listOfCommands += '\n';
+            listOfCommands = listOfCommands + i;
+            listOfCommands = listOfCommands + "\n";
         }
         channel.createMessage(listOfCommands);
     }
