@@ -1,38 +1,47 @@
+import Listeners.OnMessageCreateListener;
+import Listeners.OnReactionAddEventListener;
+import Listeners.OnReadyEventListener;
+import Utility.Utility;
 import discord4j.common.util.Snowflake;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
+import discord4j.core.event.EventDispatcher;
+import discord4j.core.event.domain.message.MessageCreateEvent;
+import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.TextChannel;
 
 public class Sadge {
 
     private final DiscordClient client;
     private final GatewayDiscordClient gateway;
+    private final EventDispatcher eventDispatcher;
     private final Utility utility;
 
     public Sadge(String token)
     {
         client = DiscordClient.create(token);
         gateway = client.login().block();
+        eventDispatcher = gateway.getEventDispatcher();
         utility = new Utility(gateway);
-        start();
+    }
+
+    public void start()
+    {
+        listen();
         gateway.onDisconnect().block();
     }
 
-    private void start()
+    private void listen()
     {
-        TextChannel generalChannel = (TextChannel) utility.getGeneralChannel();
-        generalChannel.createMessage("Online!").block();
-
-    }
-
-    private void disconnect()
-    {
-        gateway.logout().block();
+        OnReadyEventListener.run(utility.getGeneralChannel());
+        OnMessageCreateListener.run(gateway, utility.getGeneralChannel());
+        OnReactionAddEventListener.run(eventDispatcher, utility.getGuildSnowflake(), utility.getTestRoleSnowflake());
     }
 
     public static void main(String args[])
     {
         Sadge sadge = new Sadge("NzI0NzU0MTU1NjQxNTAzODA0.XviWmg._v0TY1r_Hs8xDGSGK90mtsE_QaU");
+        sadge.start();
     }
 
 }
