@@ -1,15 +1,18 @@
 package Listeners;
 
 import Commands.Commands;
+import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.EventDispatcher;
+import discord4j.core.event.domain.Event;
 import discord4j.core.event.domain.lifecycle.DisconnectEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.channel.TextChannel;
 
-public class OnMessageCreateListener{
+public abstract class OnMessageCreateListener{
 
-    public static void run(EventDispatcher clientDispatcher, TextChannel channel)
+    public static void run(GatewayDiscordClient gateway, TextChannel channel)
     {
+        EventDispatcher clientDispatcher = gateway.getEventDispatcher();
         clientDispatcher.on(MessageCreateEvent.class).subscribe(MessageCreateEvent -> {
            String messageContent = MessageCreateEvent.getMessage().getContent();
            switch(messageContent)
@@ -35,6 +38,8 @@ public class OnMessageCreateListener{
                case "!help":
                    Commands.help(channel);
                    break;
+               case "!disconnect":
+                   Commands.disconnect(gateway, channel);
                default:
                    break;
            }

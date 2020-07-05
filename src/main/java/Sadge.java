@@ -1,5 +1,8 @@
 import Listeners.OnMessageCreateListener;
+import Listeners.OnReactionAddEventListener;
+import Listeners.OnReadyEventListener;
 import Utility.Utility;
+import discord4j.common.util.Snowflake;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.EventDispatcher;
@@ -30,19 +33,9 @@ public class Sadge {
 
     private void listen()
     {
-        OnMessageCreateListener.run(eventDispatcher, (TextChannel)utility.getGeneralChannel());
-        eventDispatcher.on(MessageCreateEvent.class).subscribe(messageCreateEvent -> {
-            String messageContent = messageCreateEvent.getMessage().getContent();
-            if(messageContent.equals("!disconnect"))
-            {
-                disconnect();
-            }
-        });
-    }
-
-    private void disconnect()
-    {
-        gateway.logout().block();
+        OnReadyEventListener.run(utility.getGeneralChannel());
+        OnMessageCreateListener.run(gateway, utility.getGeneralChannel());
+        OnReactionAddEventListener.run(eventDispatcher, utility.getGuildSnowflake(), utility.getTestRoleSnowflake());
     }
 
     public static void main(String args[])
