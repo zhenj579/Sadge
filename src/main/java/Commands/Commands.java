@@ -1,5 +1,6 @@
 package Commands;
 
+import discord4j.core.GatewayDiscordClient;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.TextChannel;
 import discord4j.discordjson.json.UserData;
@@ -7,7 +8,7 @@ import discord4j.discordjson.json.UserData;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Commands {
+public abstract class Commands {
     static String[] timCommandList = new String[]{
             "!roll",
             "!coinflip",
@@ -15,6 +16,17 @@ public class Commands {
             "!tim",
             "!welcome",
             "!help"};
+
+    public static void onReady(TextChannel channel)
+    {
+        channel.createMessage("Online!").block();
+    }
+
+    public static void disconnect(GatewayDiscordClient gateway, TextChannel channel)
+    {
+        channel.createMessage("Disconnecting!").block();
+        gateway.logout().block();
+    }
 
     //!roll out of 100
     public static void roll(TextChannel channel)
