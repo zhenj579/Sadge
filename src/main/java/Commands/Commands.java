@@ -1,16 +1,23 @@
 package Commands;
 
+import discord4j.common.util.Snowflake;
 import discord4j.core.GatewayDiscordClient;
+import discord4j.core.object.entity.Guild;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.Role;
+import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.TextChannel;
+import discord4j.core.spec.RoleCreateSpec;
 import discord4j.discordjson.json.UserData;
+import discord4j.rest.util.Color;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public abstract class Commands {
-    static String[] timCommandList = new String[]{
+    public static final String[] timCommandList = new String[]{
             "!roll",
             "!coinflip",
             "!compliment",
@@ -78,7 +85,7 @@ public abstract class Commands {
     //!tim
     public static void mentionTim(TextChannel channel)
     {
-        channel.createMessage("<@149606618978451456> is very handsome").block();
+        channel.createMessage("<@149606618978451456> is balding <:kekw:725855517758455862>").block();
     }
 
     //!welcome
@@ -100,6 +107,35 @@ public abstract class Commands {
             cmds.setTitle("Commands: ")
                 .setDescription(finalListCommands);
         }).block();
+    }
+
+    public static void leky(TextChannel channel)
+    {
+        channel.createMessage("Hi <@149606618978451456> <:kekw:725855517758455862>").block();
+    }
+
+    public static void makeRole(Guild guild, TextChannel general)
+    {
+        boolean roleExists = false;
+        List<Role> roles = guild.getRoles().collectList().block();
+        for(Role r : roles)
+        {
+            if(r.getName().equals("trihard"))
+            {
+                roleExists = true;
+                general.createMessage(r.getMention() + " has been deleted!").block();
+                r.delete("Role exists").block();
+            }
+        }
+        if(!roleExists)
+        {
+            Role trihard = guild.createRole(spec -> {
+                spec.setColor(Color.of(24,150,32));
+                spec.setMentionable(true);
+                spec.setName("trihard");
+            }).block();
+            general.createMessage(trihard.getMention() + " has been created!").block();
+        }
     }
 
 

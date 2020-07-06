@@ -1,6 +1,7 @@
 package Listeners;
 
 import Commands.Commands;
+import discord4j.common.util.Snowflake;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.EventDispatcher;
 import discord4j.core.event.domain.Event;
@@ -36,10 +37,16 @@ public abstract class OnMessageCreateListener{
                    Commands.welcome(channel, MessageCreateEvent.getMessage());
                    break;
                case "!help":
-                   Commands.help(channel);
+                   Commands.listCommands(channel);
                    break;
                case "!disconnect":
                    Commands.disconnect(gateway, channel);
+                   break;
+               case "!leky":
+                   Commands.leky(channel);
+                   break;
+               case "!makeRole":
+                   Commands.makeRole(gateway.getGuildById(Snowflake.of("724757461944238100")).block(), channel);
                default:
                    break;
            }
