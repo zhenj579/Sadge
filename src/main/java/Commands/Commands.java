@@ -6,6 +6,7 @@ import discord4j.core.object.entity.channel.TextChannel;
 import discord4j.discordjson.json.UserData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public abstract class Commands {
@@ -87,15 +88,18 @@ public abstract class Commands {
     }
 
     //!help
-    public static void help(TextChannel channel)
+    public static void listCommands(TextChannel channel)
     {
-        String listOfCommands = "";
-        for (String i : timCommandList)
-        {
-            listOfCommands = listOfCommands + i;
-            listOfCommands = listOfCommands + "\n";
+        String listCommands = "";
+        for (String s : timCommandList) {
+            listCommands += s;
+            listCommands += "\n";
         }
-        channel.createMessage(listOfCommands);
+        String finalListCommands = listCommands;
+        channel.createEmbed(cmds ->{
+            cmds.setTitle("Commands: ")
+                .setDescription(finalListCommands);
+        }).block();
     }
 
 
