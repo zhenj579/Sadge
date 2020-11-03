@@ -40,7 +40,7 @@ public class Sadge {
 
     public static void main(String args[])
     {
-        Sadge sadge = new Sadge("NzI0NzU0MTU1NjQxNTAzODA0.XviWmg._v0TY1r_Hs8xDGSGK90mtsE_QaU");
+        Sadge sadge = new Sadge("token");
         sadge.start();
     }
 
