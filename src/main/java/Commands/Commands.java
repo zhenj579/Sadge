@@ -23,7 +23,8 @@ public abstract class Commands {
             "!compliment",
             "!tim",
             "!welcome",
-            "!help"};
+            "!help",
+            "!squadw"};
 
     public static void onReady(TextChannel channel)
     {
@@ -129,13 +130,18 @@ public abstract class Commands {
         }
         if(!roleExists)
         {
-            Role trihard = guild.createRole(spec -> {
+            Role test = guild.createRole(spec -> {
                 spec.setColor(Color.of(24,150,32));
                 spec.setMentionable(true);
-                spec.setName("trihard");
+                spec.setName("test");
             }).block();
-            general.createMessage(trihard.getMention() + " has been created!").block();
+            general.createMessage(test.getMention() + " has been created!").block();
         }
+    }
+
+    public static void squadW()
+    {
+
     }
 
 
